@@ -5,7 +5,7 @@ require_relative '../../lib/output.rb'
 
 describe Input do
   it 'test the number of cars' do
-    i = Input.new("data/input.json")
+    i = Input.new("../data/input.json")
     expect(i.parsed_cars.length).to eq(3)
   end
 end
@@ -51,8 +51,8 @@ end
 
 describe Output do
   it 'check if the output and expected one are the same' do
-    f1 = JSON.parse(File.read('data/expected_output.json'))
-    f2 = JSON.parse(File.read('data/output.json'))
+    f1 = JSON.parse(File.read('../data/expected_output.json'))
+    f2 = JSON.parse(File.read('../data/output.json'))
 
     expect(f1["rentals"]).to eq(f2["rentals"])
   end
