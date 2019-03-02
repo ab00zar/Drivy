@@ -5,24 +5,27 @@ require_relative '../lib/output.rb'
 require_relative 'rental_v5'
 
 class Main
-  attr_reader :path, :cars, :rentals, :results
+  attr_reader :input, :cars, :rentals, :results
   def initialize(path)
-    @path = path
+    @input = Input.new(path)
     @cars = []
     @rentals = []
     @results = []
   end
 
   def start
-    load_objects
+    load_cars
+    load_rentals
     compute_results
     generate_output
   end
 
-  def load_objects
-    input = Input.new(path)
-    input.parsed_cars.each {|c| cars << Car.new(c)}
-    input.parsed_rentals.each {|r| rentals << RentalV5.new(r.merge({"cars" => cars,
+  def load_cars
+    input.parsed_objects('cars').each {|c| cars << Car.new(c)}
+  end
+
+  def load_rentals
+    input.parsed_objects('rentals').each {|r| rentals << RentalV5.new(r.merge({"cars" => cars,
                                                                     "options"=> input.file['options']}))}
   end
 
